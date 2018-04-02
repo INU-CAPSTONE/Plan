@@ -1,0 +1,50 @@
+var app = require('express')();
+var server = require('http').createServer(app);
+// http server를 socket.io server로 upgrade한다
+var io = require('socket.io')(server);
+// 서버에 qrtext.txt로 정답을 저장
+var fs = require('fs');
+
+
+// localhost:3000으로 서버에 접속하면 클라이언트로 index.html을 전송한다
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
+
+// connection event handler
+// connection이 수립되면 event handler function의 인자로 socket인 들어온다
+io.on('connection', function(socket) {
+
+  // 접속한 클라이언트의 정보가 수신되면
+  socket.on('login', function(data) {
+    console.log('Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid);
+
+    // socket에 클라이언트 정보를 저장한다
+    socket.name = data.name;
+    socket.userid = data.userid;
+
+//qrtext 와 전송된 텍스트가 맞는지 확인
+fs.readFile('qrtext.txt', 'utf8', function(err,data) {
+  if (data == msg) {
+    socket.on('chat', function(data) {
+      var msg = {
+        msg: data.msg
+      };
+    })
+  }
+})
+
+
+  // force client disconnect from server
+  socket.on('forceDisconnect', function() {
+    socket.disconnect();
+  })
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected: ' + socket.name);
+  });
+});
+
+server.listen(3000, function() {
+  console.log('Socket IO server listening on port 3000');
+});
