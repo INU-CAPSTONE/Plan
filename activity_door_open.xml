@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/InfoText7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="문 열기"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        tools:layout_editor_absoluteY="10dp" />
+
+    <ImageView
+        android:id="@+id/recentQRCodeView"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:layout_editor_absoluteX="52.5dp"
+        tools:layout_editor_absoluteY="114.5dp" />
+
+    <Button
+        android:id="@+id/homeButton2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="홈"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="92.5dp"
+        tools:layout_editor_absoluteY="415dp" />
+</android.support.constraint.ConstraintLayout>

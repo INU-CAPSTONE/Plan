@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/InfoText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="22sp"
+        android:text="예약 내역"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteY="10dp" />
+
+    <TextView
+        android:id="@+id/reservationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="60dp" />
+
+    <Button
+        android:id="@+id/openButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="문 열기"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="67.5dp"
+        tools:layout_editor_absoluteY="320dp" />
+
+    <Button
+        android:id="@+id/resetPasswordButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="비밀번호 변경"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="67.5dp"
+        tools:layout_editor_absoluteY="380dp" />
+</android.support.constraint.ConstraintLayout>
