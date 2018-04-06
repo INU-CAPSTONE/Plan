@@ -21,18 +21,24 @@ io.on('connection', function(socket) {
 
     // socket에 클라이언트 정보를 저장한다
     socket.name = data.name;
-    socket.userid = data.userid;
+  //  socket.userid = data.userid;
 
-//qrtext 와 전송된 텍스트가 맞는지 확인
-fs.readFile('qrtext.txt', 'utf8', function(err,data) {
-  if (data == msg) {
-    socket.on('chat', function(data) {
-      var msg = {
-        msg: data.msg
-      };
+    io.emit('login', data.name);
+  });
+
+  socket.on('check', function(data) {
+    console.log('Msg %s : %s', socket.name, data.msg);
+    fs.readFile('qrtext.txt', 'utf-8', function(err,ans) {
+      if (ans == data.msg) {
+        socket.on('check', function(data) {
+          var msg = {
+            msg: data.msg
+          };
+          socket.emit('s2c check', msg);
+        })
+      }
     })
-  }
-})
+  })
 
 
   // force client disconnect from server
