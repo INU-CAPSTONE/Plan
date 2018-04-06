@@ -1,0 +1,10 @@
+var WebSockets = require("ws").Server;
+var wss = new WebSocketServer({port:3000});
+
+// 연결이 수립되면 클라이언트에 메시지 전송하고 클라이언트로부터 메시지 수신
+wss.on("connect", function(ws) {
+  ws.send("Server");
+  ws.on("msg", function(message) {
+    console.log("Receive : %s", message);
+  });
+});
