@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>INULOCK - Monitoring</title>
+
+
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="cover.css" rel="stylesheet">
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+      var ws = new WebSocket('ws://' + host + ':3050');
+      ws.onmessage = function (event) {
+        document.getElementById('logarea').value += '\n' + event.data;
+        document.getElementById('logarea').scrollTop = document.getElementById('logarea').scrollHeight;
+      };
+    </script>
+  </head>
+  <body>
+  <body>
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div>
+            <div class="inner">
+              <h3 class="masthead-brand">로그 모니터링</h3>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <div class="form-group">
+                <textarea class="form-control" disabled rows="28" id="logarea"></textarea>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>
