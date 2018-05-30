@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>INULOCK</title>
+
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="cover.css" rel="stylesheet">
+    <script>
+      function updateQR(value) {
+        document.getElementById('qrcode').src = value;
+      }
+      function generateKey() {
+        ws.send("generatekey");
+        document.getElementById('keybtn').setAttribute( "onclick", "");
+        document.getElementById('timer').innerHTML = 00 + ":" + 20;
+        document.getElementById('qrcode').style.display = "";
+        startTimer();
+      }
+      function renewKey() {
+        ws.send("renewkey");
+        document.getElementById('keybtn').setAttribute( "onclick", "");
+        document.getElementById('timer').innerHTML = 00 + ":" + 20;
+        document.getElementById('qrcode').style.display = "";
+        document.getElementById('timer').style.display = "";
+        startTimer();
+      }
+      function expirekey() {
+        ws.send("expirekey");
+      }
+      function hiddenBtn() {
+        document.getElementById('popup').style.display = "none";
+      }
+      function startTimer() {
+        var presentTime = document.getElementById('timer').innerHTML;
+        var timeArray = presentTime.split(/[:]+/);
+        var m = timeArray[0];
+        var s = checkSecond((timeArray[1] - 1));
+        if(s==59){m=m-1}
+        if(m<0){
+          document.getElementById('keybtn').setAttribute( "onclick", "renewKey();");
+          document.getElementById('keybtn').innerHTML="재발급하기";
+          document.getElementById('qrcode').style.display = "none";
+          document.getElementById('timer').style.display = "none";
+          expirekey();
+          return;
+        }
+
+        document.getElementById('timer').innerHTML = m + ":" + s;
+        setTimeout(startTimer, 1000);
+      }
+      function checkSecond(sec) {
+        if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+        if (sec < 0) {sec = "59"};
+        return sec;
+      }
+      var host = window.document.location.host.replace(/:.*/, '');
+      var ws = new WebSocket('ws://' + host + ':3030');
+      ws.onmessage = function (event) {
+        if(event.data.startsWith('success')) {
+          document.getElementById('popup').style.display = "";
+        } else {
+          updateQR(event.data);
+        }
+      };
+    </script>
+  </head>
+  <body>
+  <body>
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div>
+            <div class="inner">
+              <h3 class="masthead-brand">INULOCK</h3>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <div id="popup" class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+              <button onclick="hiddenBtn()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              인증 성공! 출입이 가능합니다.
+            </div>
+            <img id="qrcode" class="img-responsive" width="100%" src="  alt="QR Code" style="display:none">
+            <p id="timer" class="lead"></p>
+            <h1 class="cover-heading">스마트 키 발급 받기</h1>
+            <p class="lead">제한시간안에 출입하지 않으면 자동으로 키가 만료됩니다.<br>제한시간이 지났을 경우 재발급버튼을 눌러주세요.<br>인증이 완료될 때까지 종료하지 마세요.</p>
+            <p class="lead">
+              <a href="#" id="keybtn" onclick="generateKey();" class="btn btn-lg btn-default">체크인하기</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>
